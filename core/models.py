@@ -4,6 +4,7 @@ from pydantic import BaseModel, Field
 
 
 class TaskCreate(BaseModel):
+    """Model for creating new tasks."""
     title: str = Field(..., min_length=1, max_length=200, description="Task title")
     description: Optional[str] = Field(
         None, max_length=1000, description="Task description"
@@ -12,6 +13,7 @@ class TaskCreate(BaseModel):
 
 
 class TaskUpdate(BaseModel):
+    """Model for updating existing tasks. All fields are optional."""
     title: Optional[str] = Field(
         None, min_length=1, max_length=200, description="Task title"
     )
@@ -22,6 +24,7 @@ class TaskUpdate(BaseModel):
 
 
 class Task(BaseModel):
+    """Complete task model with ID and timestamps."""
     id: int = Field(..., description="Task unique identifier")
     title: str = Field(..., description="Task title")
     description: Optional[str] = Field(None, description="Task description")
@@ -33,4 +36,5 @@ class Task(BaseModel):
 
 
 class TaskResponse(Task):
+    """API response model for tasks."""
     pass
