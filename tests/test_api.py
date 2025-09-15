@@ -1,8 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
 from main import app
-from core.repository import TaskRepository
-from core.repository import get_task_repository
+from src.core.repository import TaskRepository
+from src.core.repository import get_task_repository
 
 
 @pytest.fixture
