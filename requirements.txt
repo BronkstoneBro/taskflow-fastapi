@@ -35,3 +35,5 @@ watchfiles==1.1.0
 websockets==15.0.1
 scikit-learn==1.7.2
 joblib==1.5.2
+numpy==1.26.4
+scipy==1.16.2
