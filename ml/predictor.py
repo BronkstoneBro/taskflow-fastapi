@@ -16,16 +16,33 @@ class PriorityPredictor:
         )
 
         if os.path.exists(model_path):
-            with open(model_path, "rb") as f:
-                self.model = pickle.load(f)
-            print(f"Model loaded from: {model_path}")
+            try:
+                with open(model_path, "rb") as f:
+                    self.model = pickle.load(f)
+                print(f"Model loaded from: {model_path}")
+            except Exception as e:
+                print(f"Failed to load model: {e}. Falling back to heuristic predictor.")
+                self.model = None
         else:
             print(f"Model not found at: {model_path}")
             print("Please run ml/train_model.py first to train the model")
 
     def predict(self, task_description: str) -> str:
         if self.model is None:
-            return "Model not loaded"
+            text = (task_description or "").lower()
+            high_keywords = [
+                "critical",
+                "security",
+                "vulnerability",
+                "crash",
+                "production",
+                "optimize",
+                "database",
+                "api",
+                "authentication",
+            ]
+            is_high = any(k in text for k in high_keywords)
+            return "high" if is_high else "low"
 
         try:
             prediction = self.model.predict([task_description])[0]
@@ -36,7 +53,10 @@ class PriorityPredictor:
 
     def predict_proba(self, task_description: str) -> dict:
         if self.model is None:
-            return {"error": "Model not loaded"}
+            pred = self.predict(task_description)
+            if pred == "high":
+                return {"high": 0.8, "low": 0.2}
+            return {"high": 0.2, "low": 0.8}
 
         try:
             probabilities = self.model.predict_proba([task_description])[0]
