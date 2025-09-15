@@ -45,6 +45,7 @@ predictor = PriorityPredictor()
 
 @app.get("/tasks", response_model=List[TaskResponse])
 async def get_tasks(repo: TaskRepository = Depends(get_task_repository)):
+    """List all tasks in the system."""
     return repo.get_all_tasks()
 
 
@@ -55,6 +56,7 @@ async def create_task(
     response: Response,
     repo: TaskRepository = Depends(get_task_repository),
 ):
+    """Create a new task and return it. Sets Location header to the new resource."""
     task = repo.create_task(task_data)
     response.headers["Location"] = str(request.url_for("get_task", task_id=task.id))
     return task
@@ -62,6 +64,7 @@ async def create_task(
 
 @app.get("/tasks/{task_id}", response_model=TaskResponse)
 async def get_task(task_id: int, repo: TaskRepository = Depends(get_task_repository)):
+    """Get a single task by ID or return 404 if missing."""
     task = repo.get_task_by_id(task_id)
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
@@ -74,6 +77,7 @@ async def update_task(
     task_data: TaskUpdate,
     repo: TaskRepository = Depends(get_task_repository),
 ):
+    """Partially update an existing task and return it."""
     task = repo.update_task(task_id, task_data)
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
@@ -84,6 +88,7 @@ async def update_task(
 async def delete_task(
     task_id: int, repo: TaskRepository = Depends(get_task_repository)
 ):
+    """Delete a task by ID. Return 204 if deleted or 404 if not found."""
     success = repo.delete_task(task_id)
     if not success:
         raise HTTPException(status_code=404, detail="Task not found")
