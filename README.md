@@ -29,29 +29,16 @@ python main.py
 After start:
 - Swagger UI: `http://localhost:8000/docs`
 
-### 3. Test the API
-- Create a task:
-  ```bash
-  curl -X POST "http://localhost:8000/tasks" \
-    -H "Content-Type: application/json" \
-    -d '{"title": "Test task", "description": "Testing"}'
-  ```
-- Get all tasks:
-  ```bash
-  curl http://localhost:8000/tasks
-  ```
-- Update a task:
-  ```bash
-  curl -X PUT "http://localhost:8000/tasks/1" \
-    -H "Content-Type: application/json" \
-    -d '{"completed": true}'
-  ```
-- Delete a task:
-  ```bash
-  curl -X DELETE http://localhost:8000/tasks/1 -i
-  ```
+### 3. Test the API (via Swagger)
+Use Swagger UI at `http://localhost:8000/docs`:
 
-POST `/tasks` returns HTTP 201 and a `Location` header pointing to the created resource.
+- Open `/tasks` → POST and click “Try it out”.
+  - Example body: `{ "title": "Test task", "description": "Testing" }`
+  - Execute; you should get HTTP 201 and the response will include a `Location` header pointing to the created resource.
+- Open `/tasks` → GET to fetch all tasks.
+- Open `/tasks/{task_id}` → PUT to update a task.
+  - Example body: `{ "completed": true }`
+- Open `/tasks/{task_id}` → DELETE to remove a task.
 
 ### 4. ML API Usage
 
