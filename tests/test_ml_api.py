@@ -35,9 +35,7 @@ def test_predict_high_priority(client):
 
 
 def test_predict_low_priority(client):
-    prediction_data = {
-        "task_description": "Update documentation for user guide"
-    }
+    prediction_data = {"task_description": "Update documentation for user guide"}
     response = client.post("/predict", json=prediction_data)
 
     assert response.status_code == 200
@@ -48,9 +46,7 @@ def test_predict_low_priority(client):
 
 
 def test_predict_validation_error(client):
-    prediction_data = {
-        "task_description": ""
-    }
+    prediction_data = {"task_description": ""}
     response = client.post("/predict", json=prediction_data)
     assert response.status_code == 422
 
@@ -67,7 +63,7 @@ def test_predict_various_tasks(client):
         "Clean up temporary files",
         "Optimize database queries",
         "Write unit tests for API",
-        "Refactor old code"
+        "Refactor old code",
     ]
 
     for task_description in test_cases:

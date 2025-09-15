@@ -16,20 +16,23 @@ except Exception:
     fetch_users_from_api = None
     CELERY_ENABLED = False
 
+
 class PredictionRequest(BaseModel):
     task_description: str
 
-    @field_validator('task_description')
+    @field_validator("task_description")
     @classmethod
     def validate_task_description(cls, v):
         if not v or not v.strip():
             raise ValueError("Task description cannot be empty")
         return v
 
+
 class PredictionResponse(BaseModel):
     task_description: str
     predicted_priority: str
     confidence: dict = None
+
 
 app = FastAPI(
     title="Task Management API",
@@ -147,5 +150,5 @@ async def predict_priority(request: PredictionRequest):
     return PredictionResponse(
         task_description=request.task_description,
         predicted_priority=prediction,
-        confidence=confidence
+        confidence=confidence,
     )

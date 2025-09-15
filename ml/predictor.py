@@ -2,16 +2,21 @@ import pickle
 import os
 from typing import Optional
 
+
 class PriorityPredictor:
     def __init__(self):
         self.model: Optional[object] = None
         self.load_model()
 
     def load_model(self):
-        model_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models', 'priority_classifier.pkl')
+        model_path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            "models",
+            "priority_classifier.pkl",
+        )
 
         if os.path.exists(model_path):
-            with open(model_path, 'rb') as f:
+            with open(model_path, "rb") as f:
                 self.model = pickle.load(f)
             print(f"Model loaded from: {model_path}")
         else:
