@@ -71,7 +71,7 @@ if CELERY_ENABLED:
 
     @app.post("/api/fetch-users")
     async def trigger_fetch_users():
-        task = fetch_users_from_api.delay()  # type: ignore[union-attr]
+        task = fetch_users_from_api.delay()
         return {
             "task_id": task.id,
             "status": "Task started",
@@ -83,7 +83,7 @@ if CELERY_ENABLED:
 
     @app.get("/api/task-status/{task_id}")
     async def get_task_status(task_id: str):
-        task = celery_app.AsyncResult(task_id)  # type: ignore[union-attr]
+        task = celery_app.AsyncResult(task_id)
 
         if task.state == "PENDING":
             response = {
@@ -111,7 +111,7 @@ if CELERY_ENABLED:
 
     @app.get("/api/tasks/active")
     async def get_active_tasks():
-        inspect = celery_app.control.inspect()  # type: ignore[union-attr]
+        inspect = celery_app.control.inspect()
         active_tasks = inspect.active()
 
         if active_tasks is None:
