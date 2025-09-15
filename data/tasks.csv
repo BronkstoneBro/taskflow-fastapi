@@ -1,0 +1,21 @@
+task_description,priority
+"Fix login bug on website",high
+"Update user profile page",low
+"Implement new API endpoint",high
+"Refactor old code",low
+"Write unit tests for API",high
+"Clean up temporary files",low
+"Optimize database queries",high
+"Update documentation",low
+"Fix critical security vulnerability",high
+"Add logging to application",low
+"Implement user authentication",high
+"Update README file",low
+"Debug performance issues",high
+"Organize project files",low
+"Add error handling",high
+"Format code styling",low
+"Implement data validation",high
+"Update package dependencies",low
+"Fix memory leak",high
+"Write technical documentation",low
