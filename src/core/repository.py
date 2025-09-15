@@ -24,12 +24,15 @@ class TaskRepository:
         return task
 
     def get_all_tasks(self) -> List[Task]:
+        """Return all tasks currently stored in memory."""
         return list(self._tasks.values())
 
     def get_task_by_id(self, task_id: int) -> Optional[Task]:
+        """Return a task by ID or None if not found."""
         return self._tasks.get(task_id)
 
     def update_task(self, task_id: int, task_data: TaskUpdate) -> Optional[Task]:
+        """Apply partial updates to a task and return it, or None if missing."""
         task = self._tasks.get(task_id)
         if not task:
             return None
@@ -41,6 +44,7 @@ class TaskRepository:
         return task
 
     def delete_task(self, task_id: int) -> bool:
+        """Delete a task by ID. Return True if deleted, False if not found."""
         if task_id in self._tasks:
             del self._tasks[task_id]
             return True
