@@ -4,10 +4,7 @@ import os
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 
 celery_app = Celery(
-    "worker",
-    broker=redis_url,
-    backend=redis_url,
-    include=["src.tasks.tasks"]
+    "worker", broker=redis_url, backend=redis_url, include=["src.tasks.tasks"]
 )
 
 celery_app.conf.update(
@@ -16,5 +13,5 @@ celery_app.conf.update(
     result_serializer="json",
     timezone="UTC",
     enable_utc=True,
-    result_expires=3600
+    result_expires=3600,
 )

@@ -5,6 +5,7 @@ from src.core.models import Task, TaskCreate, TaskUpdate
 
 class TaskRepository:
     """In-memory repository for task CRUD operations."""
+
     def __init__(self):
         self._tasks: Dict[int, Task] = {}
         self._next_id: int = 1
