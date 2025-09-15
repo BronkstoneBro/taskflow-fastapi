@@ -55,37 +55,37 @@ POST `/tasks` returns HTTP 201 and a `Location` header pointing to the created r
 
 ### 4. ML API Usage
 
-Predict task priority using machine learning:
+**Interactive Documentation**: Open http://localhost:8000/docs and find the `/predict` endpoint
 
-```bash
-# Predict high priority task
-curl -X POST "http://localhost:8000/predict" \
-  -H "Content-Type: application/json" \
-  -d '{"task_description": "Fix critical security vulnerability"}'
+**Try it out with these examples:**
 
-# Expected response:
-# {
-#   "task_description": "Fix critical security vulnerability",
-#   "predicted_priority": "high",
-#   "confidence": {"high": 0.72, "low": 0.28}
-# }
+**High priority tasks:**
+```json
+{"task_description": "Fix critical security vulnerability"}
+{"task_description": "Implement new API endpoint"}
+{"task_description": "Optimize database performance"}
 ```
 
-```bash
-# Predict low priority task
-curl -X POST "http://localhost:8000/predict" \
-  -H "Content-Type: application/json" \
-  -d '{"task_description": "Update documentation"}'
-
-# Expected response:
-# {
-#   "task_description": "Update documentation",
-#   "predicted_priority": "low",
-#   "confidence": {"high": 0.20, "low": 0.80}
-# }
+**Low priority tasks:**
+```json
+{"task_description": "Update documentation"}
+{"task_description": "Clean up code comments"}
+{"task_description": "Refactor variable names"}
 ```
 
-The ML model is trained on task descriptions and can classify tasks as either `high` or `low` priority with confidence scores.
+**Response format:**
+```json
+{
+  "task_description": "your input text",
+  "predicted_priority": "high" | "low",
+  "confidence": {
+    "high": 0.72,
+    "low": 0.28
+  }
+}
+```
+
+The ML model uses Naive Bayes with TF-IDF to classify task descriptions into `high` or `low` priority with confidence scores.
 
 ## Testing
 
