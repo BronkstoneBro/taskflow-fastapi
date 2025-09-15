@@ -1,0 +1,64 @@
+# Test FastAPI endpoints
+
+### Task Management API Tests
+
+# Get all tasks
+GET http://127.0.0.1:8000/tasks
+Accept: application/json
+
+###
+
+# Create a new task
+POST http://127.0.0.1:8000/tasks
+Content-Type: application/json
+
+{
+  "title": "Test task",
+  "description": "This is a test task",
+  "completed": false
+}
+
+###
+
+# Get task by ID (replace 1 with actual task ID)
+GET http://127.0.0.1:8000/tasks/1
+Accept: application/json
+
+###
+
+# Update task (replace 1 with actual task ID)
+PUT http://127.0.0.1:8000/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Updated test task",
+  "description": "Updated description",
+  "completed": true
+}
+
+###
+
+# Delete task (replace 1 with actual task ID)
+DELETE http://127.0.0.1:8000/tasks/1
+
+###
+
+### Celery API Tests
+
+# Start user fetch task
+POST http://127.0.0.1:8000/api/fetch-users
+Accept: application/json
+
+###
+
+# Check task status (replace TASK_ID with actual task ID from previous response)
+GET http://127.0.0.1:8000/api/task-status/TASK_ID
+Accept: application/json
+
+###
+
+# Get active tasks
+GET http://127.0.0.1:8000/api/tasks/active
+Accept: application/json
+
+###
