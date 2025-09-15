@@ -140,11 +140,11 @@ Requires a running Redis (`REDIS_URL`, default `redis://localhost:6379/0`).
 redis-server
 celery -A src.tasks.celery_config worker --loglevel=info
 python main.py
-
-# trigger background job and check active tasks (if Celery enabled)
-curl -X POST http://localhost:8000/api/fetch-users
-curl http://localhost:8000/api/tasks/active
 ```
+
+Then open Swagger UI at `http://localhost:8000/docs`:
+- Use `POST /api/fetch-users` to enqueue the background job (if Celery is enabled)
+- Use `GET /api/tasks/active` to view active Celery tasks
 
 ### Docker Compose
 
