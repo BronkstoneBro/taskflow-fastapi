@@ -1,7 +1,9 @@
 from fastapi import FastAPI, HTTPException, Depends, Response, Request
 from typing import List
+from pydantic import BaseModel, field_validator
 from src.core.models import TaskCreate, TaskUpdate, TaskResponse
 from src.core.repository import get_task_repository, TaskRepository
+from ml.predictor import PriorityPredictor
 
 
 try:
@@ -14,11 +16,28 @@ except Exception:
     fetch_users_from_api = None
     CELERY_ENABLED = False
 
+class PredictionRequest(BaseModel):
+    task_description: str
+
+    @field_validator('task_description')
+    @classmethod
+    def validate_task_description(cls, v):
+        if not v or not v.strip():
+            raise ValueError("Task description cannot be empty")
+        return v
+
+class PredictionResponse(BaseModel):
+    task_description: str
+    predicted_priority: str
+    confidence: dict = None
+
 app = FastAPI(
     title="Task Management API",
     description="REST API for managing a to-do list",
     version="1.0.0",
 )
+
+predictor = PriorityPredictor()
 
 
 @app.get("/tasks", response_model=List[TaskResponse])
@@ -118,3 +137,15 @@ if CELERY_ENABLED:
             return {"message": "No Celery workers are currently running"}
 
         return {"active_tasks": active_tasks}
+
+
+@app.post("/predict", response_model=PredictionResponse)
+async def predict_priority(request: PredictionRequest):
+    prediction = predictor.predict(request.task_description)
+    confidence = predictor.predict_proba(request.task_description)
+
+    return PredictionResponse(
+        task_description=request.task_description,
+        predicted_priority=prediction,
+        confidence=confidence
+    )
