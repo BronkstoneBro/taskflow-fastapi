@@ -33,3 +33,5 @@ typing_extensions==4.15.0
 uvicorn==0.24.0
 watchfiles==1.1.0
 websockets==15.0.1
+scikit-learn==1.7.2
+joblib==1.5.2
