@@ -62,3 +62,35 @@ GET http://127.0.0.1:8000/api/tasks/active
 Accept: application/json
 
 ###
+
+### ML API Tests
+
+# Predict task priority - high priority example
+POST http://127.0.0.1:8000/predict
+Content-Type: application/json
+
+{
+  "task_description": "Fix critical security vulnerability in authentication system"
+}
+
+###
+
+# Predict task priority - low priority example
+POST http://127.0.0.1:8000/predict
+Content-Type: application/json
+
+{
+  "task_description": "Update documentation for user guide"
+}
+
+###
+
+# Predict task priority - another test case
+POST http://127.0.0.1:8000/predict
+Content-Type: application/json
+
+{
+  "task_description": "Implement new API endpoint for user management"
+}
+
+###
